@@ -3,37 +3,35 @@ name: Deploy TPU Presentation
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     
     steps:
-    # Checkout the code
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v4
-    
-    # Validate HTML
-    - name: Validate HTML
-      uses: Cyb3r-Jak3/html5validator-action@v7.2.0
+      
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        root: .
-        format: json
-      continue-on-error: true
-    
-    # Check for broken links
-    - name: Check Links
-      uses: lycheeverse/lychee-action@v1
-      with:
-        args: --timeout 10 index.html
-      continue-on-error: true
-    
-    # Deploy to GitHub Pages
+        path: .
+        
     - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
+      id: deployment
+      uses: actions/deploy-pages@v4
