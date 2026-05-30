@@ -1095,6 +1095,104 @@
             pointer-events: none;
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+
+        /* OCS Visualizer Styles */
+        .ocs-interactive-container {
+            background: rgba(26, 26, 46, 0.4);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 20px auto;
+            max-width: 750px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .ocs-viewport-wrapper {
+            position: relative;
+            background: rgba(10, 10, 15, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .ocs-svg-canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .svg-node {
+            fill: rgba(26, 26, 46, 0.95);
+            stroke: rgba(255, 255, 255, 0.15);
+            stroke-width: 2;
+            transition: all 0.3s;
+        }
+        
+        .svg-node:hover {
+            stroke: var(--accent);
+            fill: rgba(0, 212, 255, 0.15);
+        }
+        
+        .svg-node-text {
+            fill: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-anchor: middle;
+            font-family: 'Segoe UI', sans-serif;
+            pointer-events: none;
+        }
+        
+        .svg-switch-box {
+            fill: rgba(15, 15, 25, 0.95);
+            stroke: var(--accent);
+            stroke-width: 2.5;
+            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.25));
+        }
+        
+        .svg-switch-title {
+            fill: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-anchor: middle;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        .svg-mirror {
+            stroke: #ff00ff;
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 4px #ff00ff);
+        }
+        
+        .ocs-status-panel {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .status-msg {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #38f9d7;
+            min-height: 25px;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        @keyframes laserFlow {
+            from { stroke-dashoffset: 60; }
+            to { stroke-dashoffset: 0; }
+        }
+        
+        .laser-active {
+            animation: laserFlow 1.2s linear infinite;
+        }
     </style>
 </head>
 <body>
@@ -2055,22 +2153,83 @@
             </div>
             
             <div class="ocs-diagram fade-in">
-                <h3 style="color: var(--accent); margin-bottom: 20px;">OCS Network Topology</h3>
-                <div class="ocs-connections">
-                    <div class="ocs-node">TPU 1</div>
-                    <div class="ocs-node">TPU 2</div>
-                    <div class="ocs-node">TPU 3</div>
-                    <div class="ocs-node">TPU 4</div>
+                <h3 style="color: var(--accent); margin-bottom: 20px; text-align: center;">OCS Network Topology</h3>
+                
+                <div class="ocs-interactive-container">
+                    <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
+                        <button id="btn-ocs-animate" class="viz-btn">⏸ Pause Routing</button>
+                        <button id="btn-ocs-reconfig" class="viz-btn">🔄 Reconfigure Mirrors</button>
+                    </div>
+                    
+                    <div class="ocs-viewport-wrapper">
+                        <svg id="ocs-svg" viewBox="0 0 600 350" class="ocs-svg-canvas">
+                            <defs>
+                                <linearGradient id="laser-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#00f2fe" />
+                                    <stop offset="100%" stop-color="#4facfe" />
+                                </linearGradient>
+                                <filter id="laser-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="3" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                            </defs>
+                            
+                            <!-- Laser beams -->
+                            <path id="laser-path-1" d="" fill="none" stroke="#4285F4" stroke-width="3" filter="url(#laser-glow)" stroke-dasharray="10 5" style="transition: d 0.8s ease;" />
+                            <path id="laser-path-2" d="" fill="none" stroke="#EA4335" stroke-width="3" filter="url(#laser-glow)" stroke-dasharray="10 5" style="transition: d 0.8s ease;" />
+                            <path id="laser-path-3" d="" fill="none" stroke="#34A853" stroke-width="3" filter="url(#laser-glow)" stroke-dasharray="10 5" style="transition: d 0.8s ease;" />
+                            <path id="laser-path-4" d="" fill="none" stroke="#FBBC05" stroke-width="3" filter="url(#laser-glow)" stroke-dasharray="10 5" style="transition: d 0.8s ease;" />
+                            
+                            <!-- Nodes Top (TPU 1-4) -->
+                            <g>
+                                <rect x="50" y="20" width="80" height="40" rx="8" class="svg-node" />
+                                <text x="90" y="45" class="svg-node-text">TPU 1</text>
+                                
+                                <rect x="180" y="20" width="80" height="40" rx="8" class="svg-node" />
+                                <text x="220" y="45" class="svg-node-text">TPU 2</text>
+                                
+                                <rect x="340" y="20" width="80" height="40" rx="8" class="svg-node" />
+                                <text x="380" y="45" class="svg-node-text">TPU 3</text>
+                                
+                                <rect x="470" y="20" width="80" height="40" rx="8" class="svg-node" />
+                                <text x="510" y="45" class="svg-node-text">TPU 4</text>
+                            </g>
+                            
+                            <!-- Central OCS Switch Box -->
+                            <g transform="translate(175, 140)">
+                                <rect x="0" y="0" width="250" height="70" rx="12" class="svg-switch-box" />
+                                <text x="125" y="41" class="svg-switch-title">OCS optical switch</text>
+                                
+                                <!-- Micro-mirrors (MEMS) -->
+                                <line id="mirror-1" x1="40" y1="20" x2="60" y2="50" class="svg-mirror" style="transform-origin: 50px 35px; transition: transform 0.5s ease;" />
+                                <line id="mirror-2" x1="90" y1="20" x2="110" y2="50" class="svg-mirror" style="transform-origin: 100px 35px; transition: transform 0.5s ease;" />
+                                <line id="mirror-3" x1="140" y1="20" x2="160" y2="50" class="svg-mirror" style="transform-origin: 150px 35px; transition: transform 0.5s ease;" />
+                                <line id="mirror-4" x1="190" y1="20" x2="210" y2="50" class="svg-mirror" style="transform-origin: 200px 35px; transition: transform 0.5s ease;" />
+                            </g>
+                            
+                            <!-- Nodes Bottom (TPU 5-8) -->
+                            <g>
+                                <rect x="50" y="290" width="80" height="40" rx="8" class="svg-node" />
+                                <text x="90" y="315" class="svg-node-text">TPU 5</text>
+                                
+                                <rect x="180" y="290" width="80" height="40" rx="8" class="svg-node" />
+                                <text x="220" y="315" class="svg-node-text">TPU 6</text>
+                                
+                                <rect x="340" y="290" width="80" height="40" rx="8" class="svg-node" />
+                                <text x="380" y="315" class="svg-node-text">TPU 7</text>
+                                
+                                <rect x="470" y="290" width="80" height="40" rx="8" class="svg-node" />
+                                <text x="510" y="315" class="svg-node-text">TPU 8</text>
+                            </g>
+                        </svg>
+                    </div>
+                    
+                    <div class="ocs-status-panel">
+                        <div id="ocs-status-text" class="status-msg">OCS system initialized. Running default connection paths...</div>
+                    </div>
                 </div>
-                <div style="display: flex; justify-content: center; margin: 20px                    <div class="ocs-switch">OCS Switch</div>
-                </div>
-                <div class="ocs-connections">
-                    <div class="ocs-node">TPU 5</div>
-                    <div class="ocs-node">TPU 6</div>
-                    <div class="ocs-node">TPU 7</div>
-                    <div class="ocs-node">TPU 8</div>
-                </div>
-                <p style="color: var(--text-secondary); margin-top: 20px;">
+
+                <p style="color: var(--text-secondary); margin-top: 20px; text-align: center;">
                     OCS dynamically reconfigures connections. Any TPU can talk to any other TPU via light-speed fiber optics!
                 </p>
             </div>
@@ -3030,6 +3189,120 @@
                 }, 400);
             }, 550);
         }
+
+        // ==========================================
+        // OCS Network Topology Simulator (Slide 10)
+        // ==========================================
+        let ocsActive = true;
+        let ocsInterval = null;
+        let ocsConfigIndex = 0;
+
+        const ocsConfigs = [
+            {
+                name: 'Direct Routing (Default)',
+                desc: 'Standard direct connection. Upper TPUs communicate with their corresponding vertical neighbors directly.',
+                paths: [
+                    'M 90 60 L 225 175 L 90 290',   // TPU 1 -> Mirror 1 -> TPU 5
+                    'M 220 60 L 275 175 L 220 290', // TPU 2 -> Mirror 2 -> TPU 6
+                    'M 380 60 L 325 175 L 380 290', // TPU 3 -> Mirror 3 -> TPU 7
+                    'M 510 60 L 375 175 L 510 290'  // TPU 4 -> Mirror 4 -> TPU 8
+                ],
+                mirrors: ['rotate(0deg)', 'rotate(0deg)', 'rotate(0deg)', 'rotate(0deg)']
+            },
+            {
+                name: 'Cross-Pod Routing',
+                desc: 'Dynamic reconfiguration. Upper TPUs are routed to diagonally opposite lower TPUs for global all-to-all communications.',
+                paths: [
+                    'M 90 60 L 225 175 L 380 290',   // TPU 1 -> Mirror 1 -> TPU 7
+                    'M 220 60 L 275 175 L 510 290',  // TPU 2 -> Mirror 2 -> TPU 8
+                    'M 380 60 L 325 175 L 90 290',   // TPU 3 -> Mirror 3 -> TPU 5
+                    'M 510 60 L 375 175 L 220 290'   // TPU 4 -> Mirror 4 -> TPU 6
+                ],
+                mirrors: ['rotate(-15deg)', 'rotate(-15deg)', 'rotate(15deg)', 'rotate(15deg)']
+            },
+            {
+                name: 'All-to-All Gathering',
+                desc: 'Boardfly routing wave. Connections are shifted dynamically to execute high-speed gathering algorithms.',
+                paths: [
+                    'M 90 60 L 225 175 L 220 290',   // TPU 1 -> Mirror 1 -> TPU 6
+                    'M 220 60 L 275 175 L 90 290',   // TPU 2 -> Mirror 2 -> TPU 5
+                    'M 380 60 L 325 175 L 510 290',  // TPU 3 -> Mirror 3 -> TPU 8
+                    'M 510 60 L 375 175 L 380 290'   // TPU 4 -> Mirror 4 -> TPU 7
+                ],
+                mirrors: ['rotate(-10deg)', 'rotate(15deg)', 'rotate(-15deg)', 'rotate(10deg)']
+            }
+        ];
+
+        const btnOcsAnimate = document.getElementById('btn-ocs-animate');
+        const btnOcsReconfig = document.getElementById('btn-ocs-reconfig');
+        const ocsStatusText = document.getElementById('ocs-status-text');
+
+        if (btnOcsAnimate) {
+            btnOcsAnimate.addEventListener('click', () => {
+                if (ocsActive) {
+                    stopOcsAuto();
+                } else {
+                    startOcsAuto();
+                }
+            });
+        }
+
+        if (btnOcsReconfig) {
+            btnOcsReconfig.addEventListener('click', () => {
+                stopOcsAuto();
+                triggerOcsReconfig();
+            });
+        }
+
+        function startOcsAuto() {
+            ocsActive = true;
+            if (btnOcsAnimate) {
+                btnOcsAnimate.textContent = '⏸ Pause Routing';
+                btnOcsAnimate.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            }
+            ocsInterval = setInterval(triggerOcsReconfig, 3500);
+        }
+
+        function stopOcsAuto() {
+            ocsActive = false;
+            if (btnOcsAnimate) {
+                btnOcsAnimate.textContent = '⚡ Auto-Route Data';
+                btnOcsAnimate.style.background = 'var(--gradient-4)';
+            }
+            clearInterval(ocsInterval);
+        }
+
+        function triggerOcsReconfig() {
+            ocsConfigIndex = (ocsConfigIndex + 1) % ocsConfigs.length;
+            applyOcsConfig(ocsConfigIndex);
+        }
+
+        function applyOcsConfig(index) {
+            const config = ocsConfigs[index];
+            
+            if (ocsStatusText) {
+                ocsStatusText.innerHTML = `<strong>Active Configuration: ${config.name}</strong><br>${config.desc}`;
+            }
+
+            for (let i = 1; i <= 4; i++) {
+                const pathEl = document.getElementById(`laser-path-${i}`);
+                if (pathEl) {
+                    pathEl.setAttribute('d', config.paths[i - 1]);
+                    pathEl.classList.add('laser-active');
+                }
+                
+                const mirrorEl = document.getElementById(`mirror-${i}`);
+                if (mirrorEl) {
+                    mirrorEl.style.transform = config.mirrors[i - 1];
+                }
+            }
+        }
+
+        // Initialize OCS on load
+        setTimeout(() => {
+            applyOcsConfig(0);
+            startOcsAuto();
+        }, 1500);
     </script>
 </body>
 </html>
