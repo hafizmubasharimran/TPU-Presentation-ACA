@@ -816,6 +816,285 @@
         
         .tensor-3d::before { transform: translateZ(-30px); }
         .tensor-3d::after { transform: translateZ(-60px); }
+
+        /* Matrix Visualizer Styles */
+        .matrix-viz-container {
+            background: rgba(26, 26, 46, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .viz-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .viz-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .viz-btn.active {
+            background: var(--gradient-3);
+            color: #000000;
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+            font-weight: 700;
+        }
+        
+        .matrix-display-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin: 20px 0 30px;
+            flex-wrap: wrap;
+        }
+        
+        .matrix-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .matrix-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .matrix-grid-3x3 {
+            display: grid;
+            grid-template-columns: repeat(3, 50px);
+            grid-template-rows: repeat(3, 50px);
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .viz-cell {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            position: relative;
+            border: 1px solid transparent;
+        }
+        
+        /* Highlight states */
+        .viz-cell.highlight-row {
+            background: rgba(251, 188, 5, 0.25) !important;
+            border-color: #FBBC05 !important;
+            box-shadow: 0 0 10px rgba(251, 188, 5, 0.4);
+            color: #FBBC05;
+        }
+        
+        .viz-cell.highlight-col {
+            background: rgba(52, 168, 83, 0.25) !important;
+            border-color: #34A853 !important;
+            box-shadow: 0 0 10px rgba(52, 168, 83, 0.4);
+            color: #34A853;
+        }
+        
+        .viz-cell.highlight-mult {
+            background: #4285F4 !important;
+            border-color: #ffffff !important;
+            color: #ffffff;
+            transform: scale(1.1);
+            z-index: 2;
+        }
+        
+        .viz-cell.highlight-target {
+            background: rgba(0, 212, 255, 0.25) !important;
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+            color: var(--accent);
+        }
+        
+        .viz-cell.empty {
+            color: rgba(255, 255, 255, 0.15);
+            font-weight: 400;
+        }
+        
+        .viz-operator {
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.3);
+            user-select: none;
+        }
+        
+        .viz-explanation {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 20px auto;
+            max-width: 650px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .math-step-text {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+            color: #ffffff;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.5;
+        }
+        
+        .viz-counters {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .counter-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .counter-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .counter-val {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent);
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .viz-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .play-btn {
+            background: var(--gradient-4);
+            color: #000000;
+            box-shadow: 0 4px 15px rgba(56, 249, 215, 0.3);
+        }
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 249, 215, 0.5);
+        }
+        
+        .reset-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .reset-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .speed-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Systolic Array Visualization additions */
+        .mac-label {
+            font-size: 0.55rem;
+            color: var(--accent);
+            position: absolute;
+            top: 4px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        
+        .mac-formula {
+            font-size: 0.7rem;
+            margin-top: 10px;
+            color: var(--text-primary);
+        }
+        
+        .mac-accum {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #38f9d7;
+            font-family: monospace;
+            margin-top: 2px;
+        }
+        
+        .systolic-cell.pulse-active {
+            background: rgba(0, 242, 254, 0.15) !important;
+            border-color: #38f9d7 !important;
+            box-shadow: 0 0 15px rgba(56, 249, 215, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .data-dot {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #000000;
+            z-index: 15;
+            box-shadow: 0 0 10px currentColor;
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
     </style>
 </head>
 <body>
@@ -1023,45 +1302,97 @@
             </div>
             
             <div class="visual-box fade-in">
-                <h3 style="color: var(--accent); margin-bottom: 20px;">Why Matrix Multiplication is Hard for CPU?</h3>
-                <div class="matrix-container">
-                    <div class="matrix" style="grid-template-columns: repeat(3, 1fr);">
-                        <div class="matrix-cell">1</div>
-                        <div class="matrix-cell">2</div>
-                        <div class="matrix-cell">3</div>
-                        <div class="matrix-cell">4</div>
-                        <div class="matrix-cell">5</div>
-                        <div class="matrix-cell">6</div>
-                        <div class="matrix-cell">7</div>
-                        <div class="matrix-cell">8</div>
-                        <div class="matrix-cell">9</div>
+                <h3 style="color: var(--accent); margin-bottom: 20px; text-align: center;">Why Matrix Multiplication is Hard for CPU?</h3>
+                
+                <div class="matrix-viz-container">
+                    <div class="mode-selector">
+                        <button id="btn-cpu-mode" class="viz-btn active">💻 Simulate CPU (Sequential)</button>
+                        <button id="btn-tpu-mode" class="viz-btn">⚡ Simulate TPU (Systolic Array)</button>
                     </div>
-                    <div class="operator">×</div>
-                    <div class="matrix" style="grid-template-columns: repeat(3, 1fr);">
-                        <div class="matrix-cell">9</div>
-                        <div class="matrix-cell">8</div>
-                        <div class="matrix-cell">7</div>
-                        <div class="matrix-cell">6</div>
-                        <div class="matrix-cell">5</div>
-                        <div class="matrix-cell">4</div>
-                        <div class="matrix-cell">3</div>
-                        <div class="matrix-cell">2</div>
-                        <div class="matrix-cell">1</div>
+                    
+                    <div class="matrix-display-row">
+                        <!-- Matrix A -->
+                        <div class="matrix-wrapper">
+                            <span class="matrix-label">Matrix A</span>
+                            <div id="matrix-a" class="matrix-grid-3x3">
+                                <div class="viz-cell" data-idx="0">1</div>
+                                <div class="viz-cell" data-idx="1">2</div>
+                                <div class="viz-cell" data-idx="2">3</div>
+                                <div class="viz-cell" data-idx="3">4</div>
+                                <div class="viz-cell" data-idx="4">5</div>
+                                <div class="viz-cell" data-idx="5">6</div>
+                                <div class="viz-cell" data-idx="6">7</div>
+                                <div class="viz-cell" data-idx="7">8</div>
+                                <div class="viz-cell" data-idx="8">9</div>
+                            </div>
+                        </div>
+                        
+                        <div class="viz-operator">×</div>
+                        
+                        <!-- Matrix B -->
+                        <div class="matrix-wrapper">
+                            <span class="matrix-label">Matrix B</span>
+                            <div id="matrix-b" class="matrix-grid-3x3">
+                                <div class="viz-cell" data-idx="0">9</div>
+                                <div class="viz-cell" data-idx="1">8</div>
+                                <div class="viz-cell" data-idx="2">7</div>
+                                <div class="viz-cell" data-idx="3">6</div>
+                                <div class="viz-cell" data-idx="4">5</div>
+                                <div class="viz-cell" data-idx="5">4</div>
+                                <div class="viz-cell" data-idx="6">3</div>
+                                <div class="viz-cell" data-idx="7">2</div>
+                                <div class="viz-cell" data-idx="8">1</div>
+                            </div>
+                        </div>
+                        
+                        <div class="viz-operator">=</div>
+                        
+                        <!-- Matrix C -->
+                        <div class="matrix-wrapper">
+                            <span class="matrix-label">Result Matrix C</span>
+                            <div id="matrix-c" class="matrix-grid-3x3">
+                                <div class="viz-cell empty" data-idx="0">?</div>
+                                <div class="viz-cell empty" data-idx="1">?</div>
+                                <div class="viz-cell empty" data-idx="2">?</div>
+                                <div class="viz-cell empty" data-idx="3">?</div>
+                                <div class="viz-cell empty" data-idx="4">?</div>
+                                <div class="viz-cell empty" data-idx="5">?</div>
+                                <div class="viz-cell empty" data-idx="6">?</div>
+                                <div class="viz-cell empty" data-idx="7">?</div>
+                                <div class="viz-cell empty" data-idx="8">?</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="operator">=</div>
-                    <div class="matrix" style="grid-template-columns: repeat(3, 1fr);">
-                        <div class="matrix-cell">?</div>
-                        <div class="matrix-cell">?</div>
-                        <div class="matrix-cell">?</div>
-                        <div class="matrix-cell">?</div>
-                        <div class="matrix-cell">?</div>
-                        <div class="matrix-cell">?</div>
-                        <div class="matrix-cell">?</div>
-                        <div class="matrix-cell">?</div>
-                        <div class="matrix-cell">?</div>
+                    
+                    <div class="viz-explanation">
+                        <div id="viz-math-step" class="math-step-text">Click "Start Simulation" to see CPU sequential calculation.</div>
+                        <div class="viz-counters">
+                            <div class="counter-item">
+                                <span class="counter-label">Clock Cycles</span>
+                                <span id="counter-cycles" class="counter-val">0</span>
+                            </div>
+                            <div class="counter-item">
+                                <span class="counter-label">Memory Accesses</span>
+                                <span id="counter-memory" class="counter-val">0</span>
+                            </div>
+                            <div class="counter-item">
+                                <span class="counter-label">ALU Operations</span>
+                                <span id="counter-alu" class="counter-val">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="viz-controls">
+                        <button id="btn-play-pause" class="control-btn play-btn">▶ Start Simulation</button>
+                        <button id="btn-reset" class="control-btn reset-btn">🔄 Reset</button>
+                        <div class="speed-slider-container">
+                            <label for="speed-slider">Speed: </label>
+                            <input type="range" id="speed-slider" min="200" max="2000" step="100" value="800">
+                        </div>
                     </div>
                 </div>
-                <p style="text-align: center; color: var(--text-secondary);">
+                
+                <p style="text-align: center; color: var(--text-secondary); margin-top: 15px;">
                     For a 3×3 matrix: <strong>27 multiplications + 18 additions = 45 operations</strong><br>
                     For AI models: <strong>Millions × Millions</strong> = Billions of operations!<br>
                     CPU does this <strong>one by one</strong> with heavy overhead per operation.
@@ -1244,38 +1575,75 @@
             
             <div class="visual-box fade-in">
                 <h3 style="color: var(--accent); margin-bottom: 20px; text-align: center;">TPU Systolic Array Visualization</h3>
-                <p style="text-align: center; margin-bottom: 20px;">
+                <p style="text-align: center; margin-bottom: 15px;">
                     Data flows through a grid of <strong>Multiply-Accumulate (MAC)</strong> units like a heartbeat:
                 </p>
-                <div class="systolic-grid">
-                    <div class="systolic-cell">A1×B1</div>
-                    <div class="systolic-cell">A2×B1</div>
-                    <div class="systolic-cell">A3×B1</div>
-                    <div class="systolic-cell">A4×B1</div>
-                    <div class="systolic-cell">A5×B1</div>
-                    <div class="systolic-cell">A1×B2</div>
-                    <div class="systolic-cell">A2×B2</div>
-                    <div class="systolic-cell">A3×B2</div>
-                    <div class="systolic-cell">A4×B2</div>
-                    <div class="systolic-cell">A5×B2</div>
-                    <div class="systolic-cell">A1×B3</div>
-                    <div class="systolic-cell">A2×B3</div>
-                    <div class="systolic-cell">A3×B3</div>
-                    <div class="systolic-cell">A4×B3</div>
-                    <div class="systolic-cell">A5×B3</div>
-                    <div class="systolic-cell">A1×B4</div>
-                    <div class="systolic-cell">A2×B4</div>
-                    <div class="systolic-cell">A3×B4</div>
-                    <div class="systolic-cell">A4×B4</div>
-                    <div class="systolic-cell">A5×B4</div>
-                    <div class="systolic-cell">A1×B5</div>
-                    <div class="systolic-cell">A2×B5</div>
-                    <div class="systolic-cell">A3×B5</div>
-                    <div class="systolic-cell">A4×B5</div>
-                    <div class="systolic-cell">A5×B5</div>
+                
+                <!-- Systolic Array Controls -->
+                <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px;">
+                    <button id="btn-systolic-play" class="viz-btn" style="padding: 8px 18px; font-size: 0.85rem;">▶ Animate Heartbeat</button>
+                    <button id="btn-systolic-reset" class="viz-btn" style="padding: 8px 18px; font-size: 0.85rem;">🔄 Reset Grid</button>
                 </div>
-                <p style="text-align: center; color: var(--text-secondary); margin-top: 15px;">
-                    Each cell passes results to neighbors. <strong>No memory access needed during computation!</strong>
+                
+                <div class="systolic-container-wrapper" id="systolic-container-wrapper" style="position: relative; max-width: 500px; margin: 30px auto; padding: 25px 40px; background: rgba(0,0,0,0.2); border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); overflow: hidden;">
+                    <!-- Stream Indicators (A values flowing from left, B values flowing from top) -->
+                    <!-- Row streams (Left side) -->
+                    <div class="stream-source-left" style="position: absolute; left: 10px; top: 25px; bottom: 25px; width: 30px; display: flex; flex-direction: column; justify-content: space-around; font-weight: bold; color: #FBBC05; font-family: monospace; font-size: 0.95rem;">
+                        <span id="sys-a-0" style="height: 60px; display: flex; align-items: center; justify-content: flex-end;">2</span>
+                        <span id="sys-a-1" style="height: 60px; display: flex; align-items: center; justify-content: flex-end;">1</span>
+                        <span id="sys-a-2" style="height: 60px; display: flex; align-items: center; justify-content: flex-end;">3</span>
+                        <span id="sys-a-3" style="height: 60px; display: flex; align-items: center; justify-content: flex-end;">2</span>
+                        <span id="sys-a-4" style="height: 60px; display: flex; align-items: center; justify-content: flex-end;">4</span>
+                    </div>
+                    <!-- Column streams (Top side) -->
+                    <div class="stream-source-top" style="position: absolute; top: 5px; left: 40px; right: 40px; height: 30px; display: flex; justify-content: space-around; font-weight: bold; color: #34A853; font-family: monospace; font-size: 0.95rem; text-align: center;">
+                        <span id="sys-b-0" style="width: 60px; display: inline-block;">1</span>
+                        <span id="sys-b-1" style="width: 60px; display: inline-block;">3</span>
+                        <span id="sys-b-2" style="width: 60px; display: inline-block;">2</span>
+                        <span id="sys-b-3" style="width: 60px; display: inline-block;">4</span>
+                        <span id="sys-b-4" style="width: 60px; display: inline-block;">1</span>
+                    </div>
+                    
+                    <div class="systolic-grid" id="systolic-grid-container" style="max-width: 340px; margin: 0 auto; gap: 8px;">
+                        <!-- Row 0 -->
+                        <div class="systolic-cell" id="cell-0-0" data-row="0" data-col="0"><div class="mac-label">MAC</div><div class="mac-formula">A1×B1</div><div class="mac-accum" id="accum-0-0">0</div></div>
+                        <div class="systolic-cell" id="cell-0-1" data-row="0" data-col="1"><div class="mac-label">MAC</div><div class="mac-formula">A2×B1</div><div class="mac-accum" id="accum-0-1">0</div></div>
+                        <div class="systolic-cell" id="cell-0-2" data-row="0" data-col="2"><div class="mac-label">MAC</div><div class="mac-formula">A3×B1</div><div class="mac-accum" id="accum-0-2">0</div></div>
+                        <div class="systolic-cell" id="cell-0-3" data-row="0" data-col="3"><div class="mac-label">MAC</div><div class="mac-formula">A4×B1</div><div class="mac-accum" id="accum-0-3">0</div></div>
+                        <div class="systolic-cell" id="cell-0-4" data-row="0" data-col="4"><div class="mac-label">MAC</div><div class="mac-formula">A5×B1</div><div class="mac-accum" id="accum-0-4">0</div></div>
+                        
+                        <!-- Row 1 -->
+                        <div class="systolic-cell" id="cell-1-0" data-row="1" data-col="0"><div class="mac-label">MAC</div><div class="mac-formula">A1×B2</div><div class="mac-accum" id="accum-1-0">0</div></div>
+                        <div class="systolic-cell" id="cell-1-1" data-row="1" data-col="1"><div class="mac-label">MAC</div><div class="mac-formula">A2×B2</div><div class="mac-accum" id="accum-1-1">0</div></div>
+                        <div class="systolic-cell" id="cell-1-2" data-row="1" data-col="2"><div class="mac-label">MAC</div><div class="mac-formula">A3×B2</div><div class="mac-accum" id="accum-1-2">0</div></div>
+                        <div class="systolic-cell" id="cell-1-3" data-row="1" data-col="3"><div class="mac-label">MAC</div><div class="mac-formula">A4×B2</div><div class="mac-accum" id="accum-1-3">0</div></div>
+                        <div class="systolic-cell" id="cell-1-4" data-row="1" data-col="4"><div class="mac-label">MAC</div><div class="mac-formula">A5×B2</div><div class="mac-accum" id="accum-1-4">0</div></div>
+                        
+                        <!-- Row 2 -->
+                        <div class="systolic-cell" id="cell-2-0" data-row="2" data-col="0"><div class="mac-label">MAC</div><div class="mac-formula">A1×B3</div><div class="mac-accum" id="accum-2-0">0</div></div>
+                        <div class="systolic-cell" id="cell-2-1" data-row="2" data-col="1"><div class="mac-label">MAC</div><div class="mac-formula">A2×B3</div><div class="mac-accum" id="accum-2-1">0</div></div>
+                        <div class="systolic-cell" id="cell-2-2" data-row="2" data-col="2"><div class="mac-label">MAC</div><div class="mac-formula">A3×B3</div><div class="mac-accum" id="accum-2-2">0</div></div>
+                        <div class="systolic-cell" id="cell-2-3" data-row="2" data-col="3"><div class="mac-label">MAC</div><div class="mac-formula">A4×B3</div><div class="mac-accum" id="accum-2-3">0</div></div>
+                        <div class="systolic-cell" id="cell-2-4" data-row="2" data-col="4"><div class="mac-label">MAC</div><div class="mac-formula">A5×B3</div><div class="mac-accum" id="accum-2-4">0</div></div>
+                        
+                        <!-- Row 3 -->
+                        <div class="systolic-cell" id="cell-3-0" data-row="3" data-col="0"><div class="mac-label">MAC</div><div class="mac-formula">A1×B4</div><div class="mac-accum" id="accum-3-0">0</div></div>
+                        <div class="systolic-cell" id="cell-3-1" data-row="3" data-col="1"><div class="mac-label">MAC</div><div class="mac-formula">A2×B4</div><div class="mac-accum" id="accum-3-1">0</div></div>
+                        <div class="systolic-cell" id="cell-3-2" data-row="3" data-col="2"><div class="mac-label">MAC</div><div class="mac-formula">A3×B4</div><div class="mac-accum" id="accum-3-2">0</div></div>
+                        <div class="systolic-cell" id="cell-3-3" data-row="3" data-col="3"><div class="mac-label">MAC</div><div class="mac-formula">A4×B4</div><div class="mac-accum" id="accum-3-3">0</div></div>
+                        <div class="systolic-cell" id="cell-3-4" data-row="3" data-col="4"><div class="mac-label">MAC</div><div class="mac-formula">A5×B4</div><div class="mac-accum" id="accum-3-4">0</div></div>
+                        
+                        <!-- Row 4 -->
+                        <div class="systolic-cell" id="cell-4-0" data-row="4" data-col="0"><div class="mac-label">MAC</div><div class="mac-formula">A1×B5</div><div class="mac-accum" id="accum-4-0">0</div></div>
+                        <div class="systolic-cell" id="cell-4-1" data-row="4" data-col="1"><div class="mac-label">MAC</div><div class="mac-formula">A2×B5</div><div class="mac-accum" id="accum-4-1">0</div></div>
+                        <div class="systolic-cell" id="cell-4-2" data-row="4" data-col="2"><div class="mac-label">MAC</div><div class="mac-formula">A3×B5</div><div class="mac-accum" id="accum-4-2">0</div></div>
+                        <div class="systolic-cell" id="cell-4-3" data-row="4" data-col="3"><div class="mac-label">MAC</div><div class="mac-formula">A4×B5</div><div class="mac-accum" id="accum-4-3">0</div></div>
+                        <div class="systolic-cell" id="cell-4-4" data-row="4" data-col="4"><div class="mac-label">MAC</div><div class="mac-formula">A5×B5</div><div class="mac-accum" id="accum-4-4">0</div></div>
+                    </div>
+                </div>
+                
+                <p id="systolic-explanation" style="text-align: center; color: var(--text-secondary); margin-top: 15px; min-height: 45px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+                    Click <strong>"Animate Heartbeat"</strong> to see weights (Green: 1, 3, 2, 4, 1) and inputs (Yellow: 2, 1, 3, 2, 4) stream into the array, multiplying and accumulating inside each MAC unit in parallel waves.
                 </p>
             </div>
         </div>
@@ -2239,6 +2607,429 @@
                 }
             });
         });
+
+        // ==========================================
+        // Matrix Visualizer Implementation (Slide 3)
+        // ==========================================
+        const matrixAData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        const matrixBData = [9, 8, 7, 6, 5, 4, 3, 2, 1];
+        const matrixCData = [30, 24, 18, 84, 69, 54, 138, 114, 90];
+
+        let vizMode = 'cpu';
+        let vizPlaying = false;
+        let vizInterval = null;
+        let vizStep = 0;
+
+        let cycleCount = 0;
+        let memoryCount = 0;
+        let aluCount = 0;
+
+        const cellsA = document.querySelectorAll('#matrix-a .viz-cell');
+        const cellsB = document.querySelectorAll('#matrix-b .viz-cell');
+        const cellsC = document.querySelectorAll('#matrix-c .viz-cell');
+        const mathStepText = document.getElementById('viz-math-step');
+        
+        const counterCycles = document.getElementById('counter-cycles');
+        const counterMemory = document.getElementById('counter-memory');
+        const counterAlu = document.getElementById('counter-alu');
+        
+        const btnPlayPause = document.getElementById('btn-play-pause');
+        const btnReset = document.getElementById('btn-reset');
+        const btnCpuMode = document.getElementById('btn-cpu-mode');
+        const btnTpuMode = document.getElementById('btn-tpu-mode');
+        const speedSlider = document.getElementById('speed-slider');
+
+        if (btnCpuMode && btnTpuMode) {
+            btnCpuMode.addEventListener('click', () => {
+                if (vizMode === 'cpu') return;
+                vizMode = 'cpu';
+                btnCpuMode.classList.add('active');
+                btnTpuMode.classList.remove('active');
+                resetViz();
+            });
+
+            btnTpuMode.addEventListener('click', () => {
+                if (vizMode === 'tpu') return;
+                vizMode = 'tpu';
+                btnTpuMode.classList.add('active');
+                btnCpuMode.classList.remove('active');
+                resetViz();
+            });
+        }
+
+        if (speedSlider) {
+            speedSlider.addEventListener('input', () => {
+                if (vizPlaying) {
+                    pauseViz();
+                    playViz();
+                }
+            });
+        }
+
+        if (btnPlayPause) {
+            btnPlayPause.addEventListener('click', () => {
+                if (vizPlaying) {
+                    pauseViz();
+                } else {
+                    playViz();
+                }
+            });
+        }
+
+        if (btnReset) {
+            btnReset.addEventListener('click', resetViz);
+        }
+
+        function playViz() {
+            vizPlaying = true;
+            btnPlayPause.textContent = '⏸ Pause Simulation';
+            btnPlayPause.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            vizInterval = setInterval(runVizStep, speedSlider ? speedSlider.value : 800);
+        }
+
+        function pauseViz() {
+            vizPlaying = false;
+            btnPlayPause.textContent = '▶ Resume Simulation';
+            btnPlayPause.style.background = 'var(--gradient-4)';
+            clearInterval(vizInterval);
+        }
+
+        function resetViz() {
+            pauseViz();
+            btnPlayPause.textContent = '▶ Start Simulation';
+            btnPlayPause.style.background = 'var(--gradient-4)';
+            vizStep = 0;
+            cycleCount = 0;
+            memoryCount = 0;
+            aluCount = 0;
+            updateCounters();
+            
+            cellsA.forEach(c => c.className = 'viz-cell');
+            cellsB.forEach(c => c.className = 'viz-cell');
+            cellsC.forEach(c => {
+                c.className = 'viz-cell empty';
+                c.textContent = '?';
+            });
+            mathStepText.textContent = vizMode === 'cpu' 
+                ? 'Click "Start Simulation" to see CPU sequential calculation.'
+                : 'Click "Start Simulation" to see TPU parallel heartbeat calculation.';
+        }
+
+        function updateCounters() {
+            if (counterCycles) counterCycles.textContent = cycleCount;
+            if (counterMemory) counterMemory.textContent = memoryCount;
+            if (counterAlu) counterAlu.textContent = aluCount;
+        }
+
+        function runVizStep() {
+            if (vizMode === 'cpu') {
+                runCpuStep();
+            } else {
+                runTpuStep();
+            }
+        }
+
+        function runCpuStep() {
+            if (vizStep >= 27) {
+                pauseViz();
+                mathStepText.innerHTML = '🎉 <strong>Matrix Multiplication Complete!</strong><br>CPU completed the 3x3 matrix in <strong>135 clock cycles</strong> due to the sequential Von Neumann bottleneck.';
+                return;
+            }
+
+            const cIdx = Math.floor(vizStep / 3);
+            const macStep = vizStep % 3;
+            
+            const row = Math.floor(cIdx / 3);
+            const col = cIdx % 3;
+
+            const aIdx = row * 3 + macStep;
+            const bIdx = macStep * 3 + col;
+
+            cellsA.forEach(c => c.className = 'viz-cell');
+            cellsB.forEach(c => c.className = 'viz-cell');
+            cellsC.forEach((c, idx) => {
+                if (idx < cIdx) {
+                    c.className = 'viz-cell';
+                    c.textContent = matrixCData[idx];
+                } else if (idx === cIdx) {
+                    c.className = 'viz-cell highlight-target';
+                    c.textContent = '...';
+                } else {
+                    c.className = 'viz-cell empty';
+                    c.textContent = '?';
+                }
+            });
+
+            cellsA[aIdx].className = 'viz-cell highlight-row highlight-mult';
+            cellsB[bIdx].className = 'viz-cell highlight-col highlight-mult';
+            
+            for (let i = 0; i < 3; i++) {
+                if (i !== macStep) {
+                    cellsA[row * 3 + i].className = 'viz-cell highlight-row';
+                    cellsB[i * 3 + col].className = 'viz-cell highlight-col';
+                }
+            }
+
+            const valA = matrixAData[aIdx];
+            const valB = matrixBData[bIdx];
+            const product = valA * valB;
+
+            let runningSum = 0;
+            let calculationString = '';
+            for (let i = 0; i <= macStep; i++) {
+                const va = matrixAData[row * 3 + i];
+                const vb = matrixBData[i * 3 + col];
+                calculationString += `${va}×${vb}`;
+                runningSum += va * vb;
+                if (i < macStep) calculationString += ' + ';
+            }
+
+            mathStepText.innerHTML = `Calculating cell C[${row}][${col}]: Step ${macStep+1} of 3<br><strong>Fetch A[${row}][${macStep}] (${valA}) & B[${macStep}][${col}] (${valB}) ➜ Multiply: ${valA}×${valB} = ${product}</strong><br>Running Sum: ${calculationString} = <strong>${runningSum}</strong>`;
+
+            cycleCount += 5;
+            memoryCount += 2;
+            aluCount += 2;
+
+            if (macStep === 2) {
+                cellsC[cIdx].className = 'viz-cell highlight-target';
+                cellsC[cIdx].textContent = runningSum;
+                memoryCount += 1;
+                cycleCount += 1;
+            }
+
+            updateCounters();
+            vizStep++;
+        }
+
+        function runTpuStep() {
+            if (vizStep >= 7) {
+                pauseViz();
+                cellsC.forEach((c, idx) => {
+                    c.className = 'viz-cell';
+                    c.textContent = matrixCData[idx];
+                });
+                cellsA.forEach(c => c.className = 'viz-cell');
+                cellsB.forEach(c => c.className = 'viz-cell');
+                mathStepText.innerHTML = '🎉 <strong>Matrix Multiplication Complete!</strong><br>TPU computed everything in parallel in just <strong>7 clock cycles</strong> with only <strong>6 memory accesses</strong>!';
+                return;
+            }
+
+            cycleCount++;
+            
+            cellsA.forEach(c => c.className = 'viz-cell');
+            cellsB.forEach(c => c.className = 'viz-cell');
+            
+            cellsC.forEach((c, idx) => {
+                const r = Math.floor(idx / 3);
+                const c_ = idx % 3;
+                if (r + c_ === vizStep) {
+                    c.className = 'viz-cell highlight-target';
+                    c.textContent = '...';
+                    
+                    for(let i=0; i<3; i++) {
+                        cellsA[r * 3 + i].className = 'viz-cell highlight-row';
+                        cellsB[i * 3 + c_].className = 'viz-cell highlight-col';
+                    }
+                } else if (r + c_ < vizStep) {
+                    c.className = 'viz-cell';
+                    c.textContent = matrixCData[idx];
+                } else {
+                    c.className = 'viz-cell empty';
+                    c.textContent = '?';
+                }
+            });
+
+            if (vizStep === 0) {
+                memoryCount += 2;
+            } else if (vizStep === 1) {
+                memoryCount += 2;
+            } else if (vizStep === 2) {
+                memoryCount += 2;
+            }
+            
+            let activeMacs = 0;
+            for (let r = 0; r < 3; r++) {
+                for (let c = 0; c < 3; c++) {
+                    if (r + c <= vizStep && (r + c + 2 >= vizStep)) {
+                        activeMacs++;
+                    }
+                }
+            }
+            aluCount += activeMacs * 2;
+
+            mathStepText.innerHTML = `TPU Heartbeat Tick: ${vizStep + 1}<br><strong>Wave ${vizStep + 1} processing: ${activeMacs} MAC units executing in parallel.</strong><br>Data shifts right and down in unison on the heartbeat.`;
+            
+            updateCounters();
+            vizStep++;
+        }
+
+        // ==========================================
+        // TPU Systolic Array Simulator (Slide 5)
+        // ==========================================
+        let systolicPlaying = false;
+        let systolicInterval = null;
+        let systolicStep = 0;
+
+        const inputA = [2, 1, 3, 2, 4];
+        const inputB = [1, 3, 2, 4, 1];
+        const systolicAccum = Array(5).fill(0).map(() => Array(5).fill(0));
+        
+        const btnSystolicPlay = document.getElementById('btn-systolic-play');
+        const btnSystolicReset = document.getElementById('btn-systolic-reset');
+        const systolicExplanation = document.getElementById('systolic-explanation');
+        const systolicWrapper = document.getElementById('systolic-container-wrapper');
+
+        if (btnSystolicPlay) {
+            btnSystolicPlay.addEventListener('click', () => {
+                if (systolicPlaying) {
+                    pauseSystolic();
+                } else {
+                    playSystolic();
+                }
+            });
+        }
+
+        if (btnSystolicReset) {
+            btnSystolicReset.addEventListener('click', resetSystolic);
+        }
+
+        function playSystolic() {
+            systolicPlaying = true;
+            btnSystolicPlay.textContent = '⏸ Pause Heartbeat';
+            btnSystolicPlay.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            systolicInterval = setInterval(runSystolicStep, 1000);
+        }
+
+        function pauseSystolic() {
+            systolicPlaying = false;
+            btnSystolicPlay.textContent = '▶ Animate Heartbeat';
+            btnSystolicPlay.style.background = 'var(--gradient-4)';
+            clearInterval(systolicInterval);
+        }
+
+        function resetSystolic() {
+            pauseSystolic();
+            systolicStep = 0;
+            
+            for (let r = 0; r < 5; r++) {
+                for (let c = 0; c < 5; c++) {
+                    systolicAccum[r][c] = 0;
+                    const accEl = document.getElementById(`accum-${r}-${c}`);
+                    if (accEl) accEl.textContent = '0';
+                    const cellEl = document.getElementById(`cell-${r}-${c}`);
+                    if (cellEl) cellEl.className = 'systolic-cell';
+                }
+            }
+            
+            document.querySelectorAll('.data-dot').forEach(dot => dot.remove());
+            if (systolicExplanation) {
+                systolicExplanation.innerHTML = `Click <strong>"Animate Heartbeat"</strong> to see weights (Green: 1, 3, 2, 4, 1) and inputs (Yellow: 2, 1, 3, 2, 4) stream into the array, multiplying and accumulating inside each MAC unit in parallel waves.`;
+            }
+        }
+
+        function runSystolicStep() {
+            if (systolicStep >= 12) {
+                pauseSystolic();
+                if (systolicExplanation) {
+                    systolicExplanation.innerHTML = `🎉 <strong>Systolic Array Pipeline Complete!</strong> All inputs and weights have streamed through. The cell accumulators now hold the final computed results.`;
+                }
+                return;
+            }
+
+            if (systolicExplanation) {
+                systolicExplanation.innerHTML = `⚙️ <strong>Heartbeat Tick: ${systolicStep + 1}</strong><br>Data flows horizontally and vertically. MAC units update their running sums in parallel.`;
+            }
+            
+            for (let r = 0; r < 5; r++) {
+                for (let c = 0; c < 5; c++) {
+                    const cell = document.getElementById(`cell-${r}-${c}`);
+                    if (cell && r + c === systolicStep) {
+                        cell.className = 'systolic-cell pulse-active';
+                        
+                        const valA = inputA[r];
+                        const valB = inputB[c];
+                        const product = valA * valB;
+                        systolicAccum[r][c] += product;
+                        
+                        const accumEl = document.getElementById(`accum-${r}-${c}`);
+                        if (accumEl) accumEl.textContent = systolicAccum[r][c];
+                        
+                        spawnMeetingDots(r, c, valA, valB);
+                        
+                        setTimeout(() => {
+                            if (systolicPlaying) {
+                                cell.className = 'systolic-cell';
+                            }
+                        }, 800);
+                    }
+                }
+            }
+
+            systolicStep++;
+        }
+
+        function spawnMeetingDots(r, c, valA, valB) {
+            const cell = document.getElementById(`cell-${r}-${c}`);
+            if (!cell || !systolicWrapper) return;
+            
+            const cellRect = cell.getBoundingClientRect();
+            const wrapperRect = systolicWrapper.getBoundingClientRect();
+            
+            const cellX = cellRect.left - wrapperRect.left + cellRect.width / 2;
+            const cellY = cellRect.top - wrapperRect.top + cellRect.height / 2;
+            
+            const dotA = document.createElement('div');
+            dotA.className = 'data-dot';
+            dotA.style.background = '#FBBC05';
+            dotA.style.color = '#000000';
+            dotA.style.boxShadow = '0 0 10px #FBBC05';
+            dotA.textContent = valA;
+            dotA.style.left = '10px';
+            dotA.style.top = `${cellY - 8}px`;
+            systolicWrapper.appendChild(dotA);
+            
+            const dotB = document.createElement('div');
+            dotB.className = 'data-dot';
+            dotB.style.background = '#34A853';
+            dotB.style.color = '#000000';
+            dotB.style.boxShadow = '0 0 10px #34A853';
+            dotB.textContent = valB;
+            dotB.style.left = `${cellX - 8}px`;
+            dotB.style.top = '10px';
+            systolicWrapper.appendChild(dotB);
+            
+            setTimeout(() => {
+                dotA.style.left = `${cellX - 8}px`;
+                dotB.style.top = `${cellY - 8}px`;
+            }, 50);
+            
+            setTimeout(() => {
+                dotA.remove();
+                dotB.remove();
+                
+                const flash = document.createElement('div');
+                flash.style.position = 'absolute';
+                flash.style.left = `${cellX - 15}px`;
+                flash.style.top = `${cellY - 15}px`;
+                flash.style.width = '30px';
+                flash.style.height = '30px';
+                flash.style.borderRadius = '50%';
+                flash.style.background = 'rgba(56, 249, 215, 0.6)';
+                flash.style.pointerEvents = 'none';
+                flash.style.transition = 'all 0.3s ease';
+                flash.style.transform = 'scale(0.1)';
+                systolicWrapper.appendChild(flash);
+                
+                setTimeout(() => {
+                    flash.style.transform = 'scale(1.5)';
+                    flash.style.opacity = '0';
+                }, 50);
+                
+                setTimeout(() => {
+                    flash.remove();
+                }, 400);
+            }, 550);
+        }
     </script>
 </body>
 </html>
