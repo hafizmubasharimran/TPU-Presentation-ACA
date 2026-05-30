@@ -1193,6 +1193,308 @@
         .laser-active {
             animation: laserFlow 1.2s linear infinite;
         }
+
+        /* TPU Architecture Diagram Styles */
+        .tpu-arch-container {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 25px;
+            background: rgba(26, 26, 46, 0.4);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 30px auto 0;
+            max-width: 1200px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        @media (max-width: 992px) {
+            .tpu-arch-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tpu-arch-viewport {
+            background: rgba(10, 10, 15, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tpu-arch-svg {
+            width: 100%;
+            height: auto;
+            max-height: 480px;
+            display: block;
+        }
+
+        /* Interactive Nodes */
+        .svg-arch-node {
+            cursor: pointer;
+        }
+
+        .svg-arch-node-bg {
+            fill: rgba(15, 15, 25, 0.9);
+            stroke: rgba(255, 255, 255, 0.15);
+            stroke-width: 2;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .svg-arch-node:hover .svg-arch-node-bg,
+        .svg-arch-node.active .svg-arch-node-bg {
+            stroke: var(--accent);
+            fill: rgba(0, 212, 255, 0.12);
+            filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+        }
+
+        .svg-arch-node-text-title {
+            fill: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            text-anchor: middle;
+            font-family: 'Segoe UI', sans-serif;
+            pointer-events: none;
+            transition: fill 0.3s;
+        }
+
+        .svg-arch-node-text-desc {
+            fill: var(--text-secondary);
+            font-size: 10px;
+            text-anchor: middle;
+            font-family: 'Segoe UI', sans-serif;
+            pointer-events: none;
+            transition: fill 0.3s;
+        }
+
+        .svg-arch-node:hover .svg-arch-node-text-desc,
+        .svg-arch-node.active .svg-arch-node-text-desc {
+            fill: #ffffff;
+        }
+
+        .svg-arch-node:hover .svg-arch-node-text-title,
+        .svg-arch-node.active .svg-arch-node-text-title {
+            fill: var(--accent);
+        }
+
+        /* External memory block styling */
+        .svg-arch-node-external .svg-arch-node-bg {
+            stroke-dasharray: 4 4;
+            stroke: #a0a0a0;
+        }
+        .svg-arch-node-external:hover .svg-arch-node-bg,
+        .svg-arch-node-external.active .svg-arch-node-bg {
+            stroke: #34A853;
+            fill: rgba(52, 168, 83, 0.1);
+            filter: drop-shadow(0 0 8px rgba(52, 168, 83, 0.4));
+        }
+        .svg-arch-node-external:hover .svg-arch-node-text-title,
+        .svg-arch-node-external.active .svg-arch-node-text-title {
+            fill: #34A853;
+        }
+
+        /* PCIe host block styling */
+        .svg-arch-node-host .svg-arch-node-bg {
+            stroke: rgba(66, 133, 244, 0.5);
+        }
+        .svg-arch-node-host:hover .svg-arch-node-bg,
+        .svg-arch-node-host.active .svg-arch-node-bg {
+            stroke: #4285F4;
+            fill: rgba(66, 133, 244, 0.1);
+            filter: drop-shadow(0 0 8px rgba(66, 133, 244, 0.4));
+        }
+        .svg-arch-node-host:hover .svg-arch-node-text-title,
+        .svg-arch-node-host.active .svg-arch-node-text-title {
+            fill: #4285F4;
+        }
+
+        /* Paths and flows */
+        .arch-flow-path {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.15);
+            stroke-width: 3;
+            transition: all 0.3s ease;
+        }
+
+        .arch-flow-path.active-path {
+            stroke: var(--accent);
+            filter: drop-shadow(0 0 4px var(--accent));
+        }
+
+        .arch-flow-path.active-path-weight {
+            stroke: #34A853;
+            filter: drop-shadow(0 0 4px #34A853);
+        }
+
+        .arch-flow-path.active-path-activation {
+            stroke: #FBBC05;
+            filter: drop-shadow(0 0 4px #FBBC05);
+        }
+
+        .arch-flow-path.active-path-result {
+            stroke: #4285F4;
+            filter: drop-shadow(0 0 4px #4285F4);
+        }
+
+        .arch-flow-path-dotted {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.08);
+            stroke-width: 2;
+            stroke-dasharray: 4 6;
+        }
+
+        .arch-arrowhead {
+            fill: rgba(255, 255, 255, 0.3);
+            transition: fill 0.3s;
+        }
+
+        .active-path + marker .arch-arrowhead,
+        .active-path-weight + marker .arch-arrowhead {
+            fill: #34A853 !important;
+        }
+
+        .active-path-activation + marker .arch-arrowhead {
+            fill: #FBBC05 !important;
+        }
+
+        .active-path-result + marker .arch-arrowhead {
+            fill: #4285F4 !important;
+        }
+
+        /* Animated Data Dot */
+        .animated-data-dot {
+            r: 6;
+            fill: var(--accent);
+            filter: drop-shadow(0 0 5px var(--accent));
+            pointer-events: none;
+            transition: transform 0.05s linear;
+        }
+
+        .weight-data-dot {
+            fill: #34A853;
+            filter: drop-shadow(0 0 5px #34A853);
+        }
+
+        .activation-data-dot {
+            fill: #FBBC05;
+            filter: drop-shadow(0 0 5px #FBBC05);
+        }
+
+        .result-data-dot {
+            fill: #4285F4;
+            filter: drop-shadow(0 0 5px #4285F4);
+        }
+
+        /* Presenter Info Panel */
+        .arch-detail-panel {
+            background: rgba(15, 15, 25, 0.75);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 15px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.02);
+            min-height: 420px;
+        }
+
+        .arch-detail-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 12px;
+        }
+
+        .arch-detail-title-label {
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .arch-detail-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .arch-detail-body {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .arch-detail-bullet-list {
+            margin-top: 10px;
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .arch-detail-bullet-list li strong {
+            color: #ffffff;
+        }
+
+        .presenter-tips-box {
+            margin-top: auto;
+            background: rgba(0, 212, 255, 0.06);
+            border-left: 4px solid var(--accent);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .presenter-tips-box h4 {
+            font-size: 0.85rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .presenter-tips-box p {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .arch-controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Floating Chip Animation */
+        @keyframes floatChip {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+                box-shadow: 0 10px 25px rgba(0, 212, 255, 0.25), 0 5px 15px rgba(0, 0, 0, 0.4);
+            }
+            100% {
+                transform: translateY(-15px) rotate(1.5deg);
+                box-shadow: 0 20px 40px rgba(0, 212, 255, 0.45), 0 15px 30px rgba(0, 0, 0, 0.5);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1238,58 +1540,69 @@
                 <span>Google's Domain-Specific Architecture for AI</span>
             </p>
             
-            <!-- Presenter Glassmorphic Card -->
-            <div class="presenter-card">
-                <div class="presenter-glow"></div>
-                <div class="presenter-card-inner">
-                    <div class="presenter-header">
-                        <div class="presenter-avatar">
-                            <svg viewBox="0 0 24 24" width="48" height="48" class="tpu-avatar-icon">
-                                <rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="var(--accent)" stroke-width="2" />
-                                <rect x="7" y="7" width="10" height="10" rx="1" fill="url(#tpu-grad)" />
-                                <line x1="8" y1="3" x2="8" y2="1" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="12" y1="3" x2="12" y2="1" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="16" y1="3" x2="16" y2="1" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="8" y1="21" x2="8" y2="23" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="12" y1="21" x2="12" y2="23" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="16" y1="21" x2="16" y2="23" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="3" y1="8" x2="1" y2="8" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="3" y1="12" x2="1" y2="12" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="3" y1="16" x2="1" y2="16" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="21" y1="8" x2="23" y2="8" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="21" y1="12" x2="23" y2="12" stroke="var(--accent)" stroke-width="2" />
-                                <line x1="21" y1="16" x2="23" y2="16" stroke="var(--accent)" stroke-width="2" />
-                                <defs>
-                                    <linearGradient id="tpu-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#00f2fe" />
-                                        <stop offset="100%" stop-color="#4facfe" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
+            <!-- Flex Wrapper for Presenter Info and Floating Chip Image -->
+            <div style="display: flex; align-items: center; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap;">
+                <!-- Presenter Glassmorphic Card -->
+                <div class="presenter-card" style="margin: 0;">
+                    <div class="presenter-glow"></div>
+                    <div class="presenter-card-inner">
+                        <div class="presenter-header">
+                            <div class="presenter-avatar">
+                                <svg viewBox="0 0 24 24" width="48" height="48" class="tpu-avatar-icon">
+                                    <rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="var(--accent)" stroke-width="2" />
+                                    <rect x="7" y="7" width="10" height="10" rx="1" fill="url(#tpu-grad)" />
+                                    <line x1="8" y1="3" x2="8" y2="1" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="12" y1="3" x2="12" y2="1" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="16" y1="3" x2="16" y2="1" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="8" y1="21" x2="8" y2="23" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="12" y1="21" x2="12" y2="23" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="16" y1="21" x2="16" y2="23" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="3" y1="8" x2="1" y2="8" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="3" y1="12" x2="1" y2="12" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="3" y1="16" x2="1" y2="16" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="21" y1="8" x2="23" y2="8" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="21" y1="12" x2="23" y2="12" stroke="var(--accent)" stroke-width="2" />
+                                    <line x1="21" y1="16" x2="23" y2="16" stroke="var(--accent)" stroke-width="2" />
+                                    <defs>
+                                        <linearGradient id="tpu-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#00f2fe" />
+                                            <stop offset="100%" stop-color="#4facfe" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="presenter-title-group">
+                                <span class="presenter-label">PRESENTER</span>
+                                <h3>Hafiz Muhammad Mubashar Imran</h3>
+                            </div>
                         </div>
-                        <div class="presenter-title-group">
-                            <span class="presenter-label">PRESENTER</span>
-                            <h3>Hafiz Muhammad Mubashar Imran</h3>
+                        
+                        <div class="presenter-body">
+                            <div class="presenter-info-item">
+                                <span class="info-icon">🎓</span>
+                                <span class="info-text"><strong>MS Computer Engineering</strong></span>
+                            </div>
+                            <div class="presenter-info-item">
+                                <span class="info-icon">🏛️</span>
+                                <span class="info-text">University of Engineering & Technology, Lahore</span>
+                            </div>
+                            <div class="presenter-info-item">
+                                <span class="info-icon">📚</span>
+                                <span class="info-text">Subject: <strong>Advanced Computer Architecture (ACA)</strong></span>
+                            </div>
+                            <div class="presenter-info-item">
+                                <span class="info-icon">👨‍🏫</span>
+                                <span class="info-text">Instructor: <strong>Ma'am Beenish</strong></span>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="presenter-body">
-                        <div class="presenter-info-item">
-                            <span class="info-icon">🎓</span>
-                            <span class="info-text"><strong>MS Computer Engineering</strong></span>
-                        </div>
-                        <div class="presenter-info-item">
-                            <span class="info-icon">🏛️</span>
-                            <span class="info-text">University of Engineering & Technology, Lahore</span>
-                        </div>
-                        <div class="presenter-info-item">
-                            <span class="info-icon">📚</span>
-                            <span class="info-text">Subject: <strong>Advanced Computer Architecture (ACA)</strong></span>
-                        </div>
-                        <div class="presenter-info-item">
-                            <span class="info-icon">👨‍🏫</span>
-                            <span class="info-text">Instructor: <strong>Ma'am Beenish</strong></span>
-                        </div>
+                </div>
+
+                <!-- TPU Chip Image Card -->
+                <div class="title-chip-card" style="position: relative; max-width: 320px; width: 100%; padding: 3px; border-radius: 20px; background: linear-gradient(135deg, rgba(66, 133, 244, 0.4), rgba(0, 212, 255, 0.4), rgba(52, 168, 83, 0.4)); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); animation: floatChip 5s ease-in-out infinite alternate; transition: transform 0.4s ease; overflow: hidden;">
+                    <div style="background: rgba(15, 15, 25, 0.95); border-radius: 17px; padding: 12px; display: flex; flex-direction: column; gap: 10px; align-items: center; position: relative;">
+                        <img src="tpu_chip.png" alt="Google TPU Chip" style="width: 100%; height: auto; border-radius: 10px; display: block; filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.3));" />
+                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--accent); background: rgba(0, 212, 255, 0.15); padding: 3px 8px; border-radius: 5px; display: inline-block;">GOOGLE TPU CORE</span>
                     </div>
                 </div>
             </div>
@@ -1894,42 +2207,151 @@
                 </div>
             </div>
             
-            <div class="visual-box fade-in">
-                <h3 style="color: var(--accent); margin-bottom: 20px; text-align: center;">TPU v1 Data Flow</h3>
-                <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
-                    <div style="text-align: center;">
-                        <div style="background: var(--gradient-1); padding: 20px; border-radius: 10px;">
-                            <p>HBM</p>
-                            <p style="font-size: 0.8rem;">Model Weights</p>
+            <!-- Interactive Labeled TPU Architecture Diagram -->
+            <div class="tpu-arch-container fade-in">
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="arch-controls-row">
+                        <h3 style="color: var(--accent); margin: 0; font-size: 1.3rem;">⚡ Labeled TPU v1 Microarchitecture</h3>
+                        <div style="display: flex; gap: 10px;">
+                            <button id="btn-arch-animate" class="viz-btn" style="padding: 6px 14px; font-size: 0.8rem;">▶ Animate Data Flow</button>
+                            <button id="btn-arch-reset" class="viz-btn" style="padding: 6px 14px; font-size: 0.8rem;">🔄 Reset Highlight</button>
                         </div>
                     </div>
-                    <div style="font-size: 2rem; color: var(--accent);">→</div>
-                    <div style="text-align: center;">
-                        <div style="background: var(--gradient-3); padding: 20px; border-radius: 10px;">
-                            <p>Weight FIFO</p>
-                            <p style="font-size: 0.8rem;">Buffer</p>
-                        </div>
+                    <div class="tpu-arch-viewport">
+                        <svg class="tpu-arch-svg" viewBox="0 0 800 480" id="tpu-arch-svg">
+                            <!-- SVG Definitions for Markers (Arrowheads) and Gradients -->
+                            <defs>
+                                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 10 5 L 0 9 z" class="arch-arrowhead" />
+                                </marker>
+                                <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#4285F4" />
+                                </marker>
+                                <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#34A853" />
+                                </marker>
+                                <marker id="arrow-yellow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#FBBC05" />
+                                </marker>
+                                <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#00d4ff" />
+                                </marker>
+                            </defs>
+
+                            <!-- Data Flow Connections (Solid Lines) -->
+                            <!-- PCIe to Unified Buffer -->
+                            <path id="path-pcie-ub" d="M 140 210 L 210 210" class="arch-flow-path" marker-end="url(#arrow)" />
+                            <path id="path-ub-pcie" d="M 210 230 L 140 230" class="arch-flow-path" marker-end="url(#arrow)" />
+                            
+                            <!-- PCIe to Control Logic -->
+                            <path id="path-pcie-ctrl" d="M 90 180 L 90 90 L 210 90" class="arch-flow-path" marker-end="url(#arrow)" />
+                            
+                            <!-- Weight DDR3 to Weight FIFO -->
+                            <path id="path-ddr-fifo" d="M 90 300 L 90 390 L 210 390" class="arch-flow-path" marker-end="url(#arrow)" />
+                            
+                            <!-- Weight FIFO to MMU -->
+                            <path id="path-fifo-mmu" d="M 360 390 L 460 390 L 460 300" class="arch-flow-path" marker-end="url(#arrow)" />
+                            
+                            <!-- Unified Buffer to MMU -->
+                            <path id="path-ub-mmu" d="M 360 220 L 400 220" class="arch-flow-path" marker-end="url(#arrow)" />
+                            
+                            <!-- MMU to Accumulator -->
+                            <path id="path-mmu-accum" d="M 520 220 L 590 220" class="arch-flow-path" marker-end="url(#arrow)" />
+                            
+                            <!-- Accumulator to Activation -->
+                            <path id="path-accum-act" d="M 660 260 L 660 360 L 590 360" class="arch-flow-path" marker-end="url(#arrow)" />
+                            
+                            <!-- Activation to Unified Buffer -->
+                            <path id="path-act-ub" d="M 400 360 L 285 360 L 285 270" class="arch-flow-path" marker-end="url(#arrow)" />
+
+                            <!-- Control Signals (Dashed Lines) -->
+                            <path d="M 285 130 L 285 150" class="arch-flow-path-dotted" marker-end="url(#arrow)" />
+                            <path d="M 360 90 L 460 90 L 460 150" class="arch-flow-path-dotted" marker-end="url(#arrow)" />
+                            <path d="M 230 130 L 230 350" class="arch-flow-path-dotted" marker-end="url(#arrow)" />
+
+                            <!-- Component Node: Host Interface (PCIe) -->
+                            <g class="svg-arch-node svg-arch-node-host" id="node-pcie">
+                                <rect x="40" y="180" width="100" height="80" rx="8" class="svg-arch-node-bg" />
+                                <text x="90" y="215" class="svg-arch-node-text-title">PCIe Gen3</text>
+                                <text x="90" y="235" class="svg-arch-node-text-desc">Host Interface</text>
+                            </g>
+
+                            <!-- Component Node: External DDR3 Weight Memory -->
+                            <g class="svg-arch-node svg-arch-node-external" id="node-ddr3">
+                                <rect x="40" y="300" width="100" height="80" rx="8" class="svg-arch-node-bg" />
+                                <text x="90" y="335" class="svg-arch-node-text-title">Weight DDR3</text>
+                                <text x="90" y="355" class="svg-arch-node-text-desc">External RAM</text>
+                            </g>
+
+                            <!-- Component Node: Control Logic & Instruction Buffer -->
+                            <g class="svg-arch-node" id="node-ctrl">
+                                <rect x="210" y="50" width="150" height="80" rx="8" class="svg-arch-node-bg" />
+                                <text x="285" y="85" class="svg-arch-node-text-title">Instruction Buffer</text>
+                                <text x="285" y="105" class="svg-arch-node-text-desc">& Control Logic</text>
+                            </g>
+
+                            <!-- Component Node: Unified Buffer (SRAM) -->
+                            <g class="svg-arch-node" id="node-ub">
+                                <rect x="210" y="150" width="150" height="120" rx="8" class="svg-arch-node-bg" />
+                                <text x="285" y="200" class="svg-arch-node-text-title">Unified Buffer</text>
+                                <text x="285" y="220" class="svg-arch-node-text-title">(24MB SRAM)</text>
+                                <text x="285" y="245" class="svg-arch-node-text-desc">Input/Output Activations</text>
+                            </g>
+
+                            <!-- Component Node: Weight FIFO -->
+                            <g class="svg-arch-node" id="node-fifo">
+                                <rect x="210" y="350" width="150" height="80" rx="8" class="svg-arch-node-bg" />
+                                <text x="285" y="385" class="svg-arch-node-text-title">Weight FIFO</text>
+                                <text x="285" y="405" class="svg-arch-node-text-desc">Prefetch Buffer</text>
+                            </g>
+
+                            <!-- Component Node: Matrix Multiply Unit (MMU) -->
+                            <g class="svg-arch-node" id="node-mmu">
+                                <rect x="400" y="150" width="120" height="150" rx="8" class="svg-arch-node-bg" />
+                                <text x="460" y="210" class="svg-arch-node-text-title">MMU Array</text>
+                                <text x="460" y="230" class="svg-arch-node-text-title">256×256 MACs</text>
+                                <text x="460" y="260" class="svg-arch-node-text-desc">Systolic Execution</text>
+                            </g>
+
+                            <!-- Component Node: Accumulators -->
+                            <g class="svg-arch-node" id="node-accum">
+                                <rect x="590" y="180" width="140" height="80" rx="8" class="svg-arch-node-bg" />
+                                <text x="660" y="215" class="svg-arch-node-text-title">Accumulators</text>
+                                <text x="660" y="235" class="svg-arch-node-text-desc">Partial Sum Storage</text>
+                            </g>
+
+                            <!-- Component Node: Activation Unit -->
+                            <g class="svg-arch-node" id="node-act">
+                                <rect x="400" y="320" width="190" height="80" rx="8" class="svg-arch-node-bg" />
+                                <text x="495" y="355" class="svg-arch-node-text-title">Activation Pipeline</text>
+                                <text x="495" y="375" class="svg-arch-node-text-desc">ReLU/Sigmoid/etc.</text>
+                            </g>
+
+                            <!-- Hidden elements for data flow animation dots -->
+                            <circle id="dot-weight" class="animated-data-dot weight-data-dot" style="display: none;" />
+                            <circle id="dot-activation" class="animated-data-dot activation-data-dot" style="display: none;" />
+                            <circle id="dot-result" class="animated-data-dot result-data-dot" style="display: none;" />
+                        </svg>
                     </div>
-                    <div style="font-size: 2rem; color: var(--accent);">→</div>
-                    <div style="text-align: center;">
-                        <div style="background: var(--gradient-4); padding: 30px; border-radius: 10px;">
-                            <p style="font-weight: bold;">MMU</p>
-                            <p style="font-size: 0.8rem;">256×256 Systolic Array</p>
-                        </div>
+                </div>
+
+                <!-- Presenter Guide & Info Panel -->
+                <div class="arch-detail-panel" id="arch-detail-panel">
+                    <div class="arch-detail-header">
+                        <div class="arch-detail-title-label">Click components to inspect</div>
+                        <div class="arch-detail-title" id="arch-title">💡 TPU v1 Architecture</div>
                     </div>
-                    <div style="font-size: 2rem; color: var(--accent);">→</div>
-                    <div style="text-align: center;">
-                        <div style="background: var(--gradient-2); padding: 20px; border-radius: 10px;">
-                            <p>Activation Unit</p>
-                            <p style="font-size: 0.8rem;">ReLU/Sigmoid</p>
-                        </div>
+                    <div class="arch-detail-body" id="arch-body">
+                        <p>This interactive block diagram shows the internal data and control flow of the Google TPU v1. When presenting, use these key architectural connections to explain how the TPU accelerates neural network operations.</p>
+                        <p style="margin-top: 15px;"><strong>How to use this slide:</strong></p>
+                        <ul class="arch-detail-bullet-list" style="margin-bottom: 20px;">
+                            <li><strong>Hover or Click</strong> any hardware block (e.g. MMU, Unified Buffer) to highlight its connections and display explanation bullet points.</li>
+                            <li>Click <strong>"Animate Data Flow"</strong> to see weights (Green) and activation values (Yellow) stream into the matrix multiplier, and results (Blue) return to the buffer.</li>
+                        </ul>
                     </div>
-                    <div style="font-size: 2rem; color: var(--accent);">→</div>
-                    <div style="text-align: center;">
-                        <div style="background: var(--gradient-1); padding: 20px; border-radius: 10px;">
-                            <p>Unified Buffer</p>
-                            <p style="font-size: 0.8rem;">24MB SRAM</p>
-                        </div>
+                    <div class="presenter-tips-box" id="arch-presenter-tips">
+                        <h4>🗣️ Presenter Tip</h4>
+                        <p id="arch-tip">Highlight that TPU v1 was designed strictly for <strong>Inference</strong> (using INT8 precision) to be power efficient, enabling voice search, search ranking, and translation on production servers.</p>
                     </div>
                 </div>
             </div>
@@ -3296,6 +3718,432 @@
                     mirrorEl.style.transform = config.mirrors[i - 1];
                 }
             }
+        }
+
+        // ==========================================
+        // TPU Architecture Diagram (Slide 7)
+        // ==========================================
+        const archComponents = {
+            'pcie': {
+                title: '🔌 PCIe Gen3 x16 Interface',
+                label: 'Host connection',
+                body: `
+                    <p>The high-speed interface connecting the TPU co-processor to the Host server CPU.</p>
+                    <ul class="arch-detail-bullet-list">
+                        <li><strong>Host-to-Device Bridge:</strong> Enables the Host CPU to load instructions and input data into the TPU, and retrieve computed results.</li>
+                        <li><strong>Bandwidth:</strong> High-bandwidth PCIe Gen3 x16 provides up to 16 GB/s of bi-directional transfer speed.</li>
+                        <li><strong>Co-processor Model:</strong> Much like a GPU, the TPU is not a standalone processor; it operates as an accelerator card managed by a host system.</li>
+                    </ul>
+                `,
+                tip: 'Tell your audience: TPU v1 operates like a GPU on a PCIe card. The Host CPU prepares the data and streams it over PCIe, then the TPU does the heavy lifting of matrix math and sends the results back.',
+                paths: ['path-pcie-ub', 'path-ub-pcie', 'path-pcie-ctrl']
+            },
+            'ctrl': {
+                title: '🧠 Instruction Buffer & Control Logic',
+                label: 'TPU Controller',
+                body: `
+                    <p>The control center of the TPU that receives, decodes, and schedules execution of instructions sent by the Host CPU.</p>
+                    <ul class="arch-detail-bullet-list">
+                        <li><strong>CISC-like Design:</strong> Decodes complex instructions (like matrix multiplication or activation functions) into micro-operations.</li>
+                        <li><strong>Instruction Buffer:</strong> Caches and pipelines instructions to ensure constant operation without waiting on the Host CPU.</li>
+                        <li><strong>Execution Control:</strong> Generates control signals that synchronize the Weight FIFO, Unified Buffer, and MMU.</li>
+                    </ul>
+                `,
+                tip: 'Explain that the TPU uses a CISC (Complex Instruction Set Computer) approach. Instead of sending millions of simple instructions, the Host CPU sends a few large instructions (like "Do Matrix Multiply") which the control logic handles internally.',
+                paths: ['path-pcie-ctrl']
+            },
+            'ub': {
+                title: '💾 24MB Unified Buffer (SRAM)',
+                label: 'Activation Memory',
+                body: `
+                    <p>The main on-chip storage for activations (both input data and output results from the activation pipeline).</p>
+                    <ul class="arch-detail-bullet-list">
+                        <li><strong>Massive Width:</strong> 256 bytes wide, matching the width of the Matrix Multiply Unit to feed it data in a single clock cycle.</li>
+                        <li><strong>On-chip SRAM:</strong> Extremely fast, low-latency memory that avoids the energy and time penalties of fetching data from external RAM.</li>
+                        <li><strong>Pantry Analogy:</strong> Serves as the local "cutting board" or workspace for intermediate results.</li>
+                    </ul>
+                `,
+                tip: 'Point out the size: 24MB of on-chip SRAM was massive for 2016 (taking up 29% of the chip area). Keeping activation data on-chip is key to defeating the Von Neumann bottleneck.',
+                paths: ['path-pcie-ub', 'path-ub-pcie', 'path-ub-mmu', 'path-act-ub']
+            },
+            'ddr3': {
+                title: '📦 External Weight Memory (DDR3)',
+                label: 'Weights Storage',
+                body: `
+                    <p>External memory used to store the model weights (the learned parameters of the neural network).</p>
+                    <ul class="arch-detail-bullet-list">
+                        <li><strong>Weight Capacity:</strong> Provides 8 GB of storage, enough to store large neural network models.</li>
+                        <li><strong>Off-chip Memory:</strong> Uses dual-channel DDR3 memory at 2133 MHz.</li>
+                        <li><strong>Bottleneck Protection:</strong> Because DDR3 is relatively slow (30 GB/s bandwidth), the TPU uses a Weight FIFO buffer to pre-fetch weights and hide memory latency.</li>
+                    </ul>
+                `,
+                tip: 'Explain that in TPU v1, weights are stored in external DDR3. Because fetching weights is slow, the TPU pre-fetches them in the background into the Weight FIFO so the MMU never runs dry.',
+                paths: ['path-ddr-fifo']
+            },
+            'fifo': {
+                title: '📥 Weight FIFO Buffer',
+                label: 'Weights Queue',
+                body: `
+                    <p>An on-chip First-In, First-Out queue that buffers weights coming from the external DDR3 memory.</p>
+                    <ul class="arch-detail-bullet-list">
+                        <li><strong>Latency Hiding:</strong> Decouples the slow speed of external DDR3 memory from the high-speed MMU execution.</li>
+                        <li><strong>Continuous Flow:</strong> Pre-fetches and queues weight tiles in the background so the MMU can immediately access them.</li>
+                        <li><strong>Capacity:</strong> Holds 4 weight tiles, feeding weights directly to the MMU at 256 bytes wide.</li>
+                    </ul>
+                `,
+                tip: 'Use a simple analogy: The Weight FIFO is like a staging area in a factory. While the worker (MMU) is assembling a product, the next set of parts is already loaded onto the conveyor belt so there is zero downtime.',
+                paths: ['path-ddr-fifo', 'path-fifo-mmu']
+            },
+            'mmu': {
+                title: '🧮 Matrix Multiply Unit (MMU)',
+                label: 'Systolic Core',
+                body: `
+                    <p>The primary execution engine of the TPU, custom-built to accelerate matrix multiplications.</p>
+                    <ul class="arch-detail-bullet-list">
+                        <li><strong>Systolic Array Grid:</strong> 256×256 grid containing 65,536 8-bit Multiply-Accumulate (MAC) units.</li>
+                        <li><strong>Parallel Processing:</strong> Computes 65,536 operations in a single clock cycle, delivering 92 TeraOPS of INT8 peak performance.</li>
+                        <li><strong>Systolic Flow:</strong> Activations stream from the left, weights stream from the top, and calculations flow through the grid like a heartbeat.</li>
+                    </ul>
+                `,
+                tip: 'This is the most important component! Explain that it uses a 256x256 2D grid. The word "systolic" comes from anatomy (systole - the heartbeat). Data flows through the cells in waves, which is why it runs 10x-30x faster than CPUs/GPUs.',
+                paths: ['path-fifo-mmu', 'path-ub-mmu', 'path-mmu-accum']
+            },
+            'accum': {
+                title: '🔢 Accumulators (Partial Sums)',
+                label: 'Math Registers',
+                body: `
+                    <p>Registers that store the intermediate, high-precision results (partial sums) generated by the Matrix Multiply Unit.</p>
+                    <ul class="arch-detail-bullet-list">
+                        <li><strong>Precision Protection:</strong> Stores sums at 16-bit or 32-bit precision to prevent rounding errors during matrix math.</li>
+                        <li><strong>Accumulator Grid:</strong> Organized as 4096 entries, each 256 elements wide (32-bit integers).</li>
+                        <li><strong>Summing Pipeline:</strong> Gathers MMU matrix products and accumulates them before writing back.</li>
+                    </ul>
+                `,
+                tip: 'Note on precision: Although TPU v1 computes in 8-bit (INT8) for speed, it accumulates in 16-bit or 32-bit to maintain accuracy. This prevents small numbers from vanishing during millions of additions.',
+                paths: ['path-mmu-accum', 'path-accum-act']
+            },
+            'act': {
+                title: '📈 Activation Pipeline',
+                label: 'Activation & Pool',
+                body: `
+                    <p>A specialized hardware unit that applies non-linear activation functions to the outputs of the accumulators.</p>
+                    <ul class="arch-detail-bullet-list">
+                        <li><strong>Non-Linearity:</strong> Applies functions like ReLU (Rectified Linear Unit), Sigmoid, and Tanh.</li>
+                        <li><strong>Hardware Lookup Tables:</strong> Uses fast, piecewise-linear approximation units to compute complex mathematical functions instantly in hardware.</li>
+                        <li><strong>Writeback:</strong> The normalized results are written back to the Unified Buffer or sent directly to the Host CPU.</li>
+                    </ul>
+                `,
+                tip: 'Explain that neural networks are useless without non-linear functions (which allow them to learn complex non-linear patterns). The TPU implements these mathematical functions (like ReLU) directly in silicon, making them almost instantaneous.',
+                paths: ['path-accum-act', 'path-act-ub']
+            }
+        };
+
+        let archAnimRunning = false;
+        let archAnimTimeout = null;
+
+        function clearAllPaths() {
+            document.querySelectorAll('.arch-flow-path').forEach(p => {
+                p.classList.remove('active-path', 'active-path-weight', 'active-path-activation', 'active-path-result');
+            });
+            document.querySelectorAll('.svg-arch-node').forEach(n => {
+                n.classList.remove('active');
+            });
+        }
+
+        function highlightPath(pathId, type) {
+            const path = document.getElementById(pathId);
+            if (path) {
+                if (type === 'weight') path.classList.add('active-path-weight');
+                else if (type === 'activation') path.classList.add('active-path-activation');
+                else if (type === 'result') path.classList.add('active-path-result');
+                else path.classList.add('active-path');
+            }
+        }
+
+        function highlightNode(nodeId) {
+            const node = document.getElementById(nodeId);
+            if (node) node.classList.add('active');
+        }
+
+        function updatePanelForAnim(titleText, bodyText, labelText) {
+            const titleEl = document.getElementById('arch-title');
+            const bodyEl = document.getElementById('arch-body');
+            const labelEl = document.querySelector('#arch-detail-panel .arch-detail-title-label');
+            const tipsBox = document.getElementById('arch-presenter-tips');
+            
+            if (titleEl) titleEl.textContent = '⚙️ ' + titleText;
+            if (bodyEl) bodyEl.innerHTML = `<p>${bodyText}</p>`;
+            if (labelEl) labelEl.textContent = 'ANIMATION: ' + labelText.toUpperCase();
+            if (tipsBox) tipsBox.style.display = 'none'; // hide tips during animation
+        }
+
+        function animateDotAlongPath(dot, path, duration, callback) {
+            if (!dot || !path) {
+                if (callback) callback();
+                return;
+            }
+            const pathLength = path.getTotalLength();
+            dot.style.display = 'block';
+            
+            let startTime = null;
+            
+            function step(timestamp) {
+                if (!archAnimRunning) {
+                    dot.style.display = 'none';
+                    return;
+                }
+                if (!startTime) startTime = timestamp;
+                const progress = (timestamp - startTime) / duration;
+                
+                if (progress < 1) {
+                    const currentLength = progress * pathLength;
+                    const point = path.getPointAtLength(currentLength);
+                    dot.setAttribute('cx', point.x);
+                    dot.setAttribute('cy', point.y);
+                    requestAnimationFrame(step);
+                } else {
+                    const point = path.getPointAtLength(pathLength);
+                    dot.setAttribute('cx', point.x);
+                    dot.setAttribute('cy', point.y);
+                    if (callback) callback();
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        function runSequenceStep(stepIndex) {
+            if (!archAnimRunning) return;
+            
+            const dotWeight = document.getElementById('dot-weight');
+            const dotActivation = document.getElementById('dot-activation');
+            const dotResult = document.getElementById('dot-result');
+            
+            clearAllPaths();
+            
+            if (stepIndex === 0) {
+                // Step 1: Weight flows from DDR3 to Weight FIFO
+                highlightPath('path-ddr-fifo', 'weight');
+                highlightNode('node-ddr3');
+                highlightNode('node-fifo');
+                updatePanelForAnim("Loading Weights", "Weights represent the model's 'learned parameters'. Because they are large, they are loaded dynamically from external DDR3 Memory into the Weight FIFO buffer.", "1. Weight Loading");
+                
+                animateDotAlongPath(dotWeight, document.getElementById('path-ddr-fifo'), 1300, () => {
+                    dotWeight.style.display = 'none';
+                    archAnimTimeout = setTimeout(() => runSequenceStep(1), 300);
+                });
+            } 
+            else if (stepIndex === 1) {
+                // Step 2: Weight to MMU & Activations loaded from PCIe
+                highlightPath('path-fifo-mmu', 'weight');
+                highlightPath('path-pcie-ub', 'activation');
+                highlightNode('node-fifo');
+                highlightNode('node-pcie');
+                highlightNode('node-ub');
+                updatePanelForAnim("Buffering Activations", "The Weight FIFO holds weights ready for computation. In parallel, input activation data (features, tokens) is loaded from the Host CPU via high-speed PCIe into the Unified Buffer.", "2. Prefetching & Buffering");
+                
+                let completed = 0;
+                const onComplete = () => {
+                    completed++;
+                    if (completed === 2) {
+                        dotWeight.style.display = 'none';
+                        dotActivation.style.display = 'none';
+                        archAnimTimeout = setTimeout(() => runSequenceStep(2), 300);
+                    }
+                };
+                
+                animateDotAlongPath(dotWeight, document.getElementById('path-fifo-mmu'), 1300, onComplete);
+                animateDotAlongPath(dotActivation, document.getElementById('path-pcie-ub'), 1300, onComplete);
+            }
+            else if (stepIndex === 2) {
+                // Step 3: Activations to MMU
+                highlightPath('path-ub-mmu', 'activation');
+                highlightNode('node-ub');
+                highlightNode('node-mmu');
+                updatePanelForAnim("Feeding the MMU Array", "The activations are streamed from the massive 24MB Unified Buffer directly into the Matrix Multiply Unit (MMU) at 256 bytes per cycle, meeting the weights in the systolic array.", "3. Data Feeding");
+                
+                animateDotAlongPath(dotActivation, document.getElementById('path-ub-mmu'), 1000, () => {
+                    dotActivation.style.display = 'none';
+                    archAnimTimeout = setTimeout(() => runSequenceStep(3), 300);
+                });
+            }
+            else if (stepIndex === 3) {
+                // Step 4: MMU processes data to Accumulator
+                highlightPath('path-mmu-accum', 'result');
+                highlightNode('node-mmu');
+                highlightNode('node-accum');
+                updatePanelForAnim("Systolic Computation", "The MMU systolic array calculates 65,536 operations in parallel. The intermediate matrix multiply outputs (partial sums) flow out of the MMU into the Accumulator registers.", "4. Multiply & Accumulate");
+                
+                animateDotAlongPath(dotResult, document.getElementById('path-mmu-accum'), 1000, () => {
+                    dotResult.style.display = 'none';
+                    archAnimTimeout = setTimeout(() => runSequenceStep(4), 300);
+                });
+            }
+            else if (stepIndex === 4) {
+                // Step 5: Accumulator to Activation Pipeline
+                highlightPath('path-accum-act', 'result');
+                highlightNode('node-accum');
+                highlightNode('node-act');
+                updatePanelForAnim("Applying Activation Functions", "High-precision partial sums (16/32-bit) are sent from the Accumulators to the Activation Pipeline to apply non-linear equations (ReLU, Sigmoid, etc.) in silicon.", "5. Activation Function");
+                
+                animateDotAlongPath(dotResult, document.getElementById('path-accum-act'), 1100, () => {
+                    dotResult.style.display = 'none';
+                    archAnimTimeout = setTimeout(() => runSequenceStep(5), 300);
+                });
+            }
+            else if (stepIndex === 5) {
+                // Step 6: Activation back to UB
+                highlightPath('path-act-ub', 'result');
+                highlightNode('node-act');
+                highlightNode('node-ub');
+                updatePanelForAnim("Writing Back Results", "The normalized activations outputted from the activation hardware pipeline are written back into the Unified Buffer to be used in subsequent neural network layers.", "6. Writeback to SRAM");
+                
+                animateDotAlongPath(dotResult, document.getElementById('path-act-ub'), 1100, () => {
+                    dotResult.style.display = 'none';
+                    archAnimTimeout = setTimeout(() => runSequenceStep(6), 300);
+                });
+            }
+            else if (stepIndex === 6) {
+                // Step 7: UB to PCIe (sending back to host)
+                highlightPath('path-ub-pcie', 'result');
+                highlightNode('node-ub');
+                highlightNode('node-pcie');
+                updatePanelForAnim("Data Return to Host", "Once execution finishes, the final computed network inference outputs are read from the Unified Buffer and transmitted back to the Host CPU via the PCIe interface.", "7. Completion");
+                
+                animateDotAlongPath(dotResult, document.getElementById('path-ub-pcie'), 1100, () => {
+                    dotResult.style.display = 'none';
+                    archAnimTimeout = setTimeout(() => {
+                        // Loop sequence
+                        runSequenceStep(0);
+                    }, 1200);
+                });
+            }
+        }
+
+        function startArchAnimation() {
+            if (archAnimRunning) {
+                stopArchAnimation();
+                return;
+            }
+            
+            archAnimRunning = true;
+            const btn = document.getElementById('btn-arch-animate');
+            if (btn) {
+                btn.textContent = '⏸ Stop Animation';
+                btn.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            }
+            
+            runSequenceStep(0);
+        }
+
+        function stopArchAnimation() {
+            archAnimRunning = false;
+            clearTimeout(archAnimTimeout);
+            
+            const btn = document.getElementById('btn-arch-animate');
+            if (btn) {
+                btn.textContent = '▶ Animate Data Flow';
+                btn.style.background = 'var(--gradient-4)';
+            }
+            
+            // Hide all animated dots
+            const dotWeight = document.getElementById('dot-weight');
+            const dotActivation = document.getElementById('dot-activation');
+            const dotResult = document.getElementById('dot-result');
+            
+            if (dotWeight) dotWeight.style.display = 'none';
+            if (dotActivation) dotActivation.style.display = 'none';
+            if (dotResult) dotResult.style.display = 'none';
+            
+            clearAllPaths();
+        }
+
+        function inspectNode(nodeId) {
+            if (archAnimRunning) {
+                stopArchAnimation();
+            }
+            
+            clearAllPaths();
+            
+            const component = archComponents[nodeId];
+            if (!component) return;
+            
+            // Highlight node
+            highlightNode('node-' + nodeId);
+            
+            // Highlight related paths
+            component.paths.forEach(pathId => {
+                let type = 'default';
+                if (pathId.includes('ddr') || pathId.includes('fifo')) type = 'weight';
+                else if (pathId.includes('ub-mmu') || pathId.includes('pcie-ub') || pathId.includes('pcie-ctrl')) type = 'activation';
+                else if (pathId.includes('accum') || pathId.includes('act') || pathId.includes('ub-pcie')) type = 'result';
+                highlightPath(pathId, type);
+            });
+            
+            // Update details panel
+            const titleEl = document.getElementById('arch-title');
+            const bodyEl = document.getElementById('arch-body');
+            const labelEl = document.querySelector('#arch-detail-panel .arch-detail-title-label');
+            const tipsBox = document.getElementById('arch-presenter-tips');
+            const tipTextEl = document.getElementById('arch-tip');
+            
+            if (titleEl) titleEl.innerHTML = component.title;
+            if (bodyEl) bodyEl.innerHTML = component.body;
+            if (labelEl) labelEl.textContent = 'Active Component Details';
+            
+            if (tipsBox) tipsBox.style.display = 'block';
+            if (tipTextEl) tipTextEl.textContent = component.tip;
+        }
+
+        function resetArchPanel() {
+            const titleEl = document.getElementById('arch-title');
+            const bodyEl = document.getElementById('arch-body');
+            const labelEl = document.querySelector('#arch-detail-panel .arch-detail-title-label');
+            const tipsBox = document.getElementById('arch-presenter-tips');
+            const tipTextEl = document.getElementById('arch-tip');
+            
+            if (titleEl) titleEl.innerHTML = '💡 TPU v1 Architecture';
+            if (bodyEl) bodyEl.innerHTML = `
+                <p>This interactive block diagram shows the internal data and control flow of the Google TPU v1. When presenting, use these key architectural connections to explain how the TPU accelerates neural network operations.</p>
+                <p style="margin-top: 15px;"><strong>How to use this slide:</strong></p>
+                <ul class="arch-detail-bullet-list" style="margin-bottom: 20px;">
+                    <li><strong>Hover or Click</strong> any hardware block (e.g. MMU, Unified Buffer) to highlight its connections and display explanation bullet points.</li>
+                    <li>Click <strong>"Animate Data Flow"</strong> to see weights (Green) and activation values (Yellow) stream into the matrix multiplier, and results (Blue) return to the buffer.</li>
+                </ul>
+            `;
+            if (labelEl) labelEl.textContent = 'Click components to inspect';
+            if (tipsBox) tipsBox.style.display = 'block';
+            if (tipTextEl) tipTextEl.textContent = "Highlight that TPU v1 was designed strictly for Inference (using INT8 precision) to be power efficient, enabling voice search, search ranking, and translation on production servers.";
+        }
+
+        // Wire event listeners for TPU Architecture diagram
+        document.querySelectorAll('.svg-arch-node').forEach(node => {
+            const compId = node.id.replace('node-', '');
+            
+            node.addEventListener('click', () => {
+                inspectNode(compId);
+            });
+            
+            node.addEventListener('mouseover', () => {
+                if (!archAnimRunning) {
+                    inspectNode(compId);
+                }
+            });
+        });
+
+        const btnArchAnimate = document.getElementById('btn-arch-animate');
+        const btnArchReset = document.getElementById('btn-arch-reset');
+
+        if (btnArchAnimate) {
+            btnArchAnimate.addEventListener('click', () => {
+                startArchAnimation();
+            });
+        }
+
+        if (btnArchReset) {
+            btnArchReset.addEventListener('click', () => {
+                stopArchAnimation();
+                resetArchPanel();
+            });
         }
 
         // Initialize OCS on load
